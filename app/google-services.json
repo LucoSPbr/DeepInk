@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "888722426463",
+    "firebase_url": "https://deep-ink-d2dd6.firebaseio.com",
+    "project_id": "deep-ink-d2dd6",
+    "storage_bucket": "deep-ink-d2dd6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888722426463:android:54a97607fba0d01da069ea",
+        "android_client_info": {
+          "package_name": "br.com.luizcampos.deepink"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "888722426463-luvbonhcmpc05ho7q15oci8cgir023f8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNmWS_OGuBTwZ_qM8Cs45RRNlQLWK7H0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "888722426463-luvbonhcmpc05ho7q15oci8cgir023f8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
