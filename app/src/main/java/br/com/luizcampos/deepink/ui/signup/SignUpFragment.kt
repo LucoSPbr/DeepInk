@@ -1,60 +1,47 @@
 package br.com.luizcampos.deepink.ui.signup
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import br.com.concrete.canarinho.watcher.TelefoneTextWatcher
+import br.com.concrete.canarinho.watcher.evento.EventoDeValidacao
 import br.com.luizcampos.deepink.R
+import br.com.luizcampos.deepink.models.RequestState
+import br.com.luizcampos.deepink.ui.base.BaseFragment
+import br.com.luizcampos.deepink.ui.base.auth.NAVIGATION_KEY
+import com.airbnb.lottie.LottieAnimationView
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class SignUpFragment : BaseFragment() {
+    override val layout = R.layout.fragment_sign_up
+    private lateinit var tvTerms: TextView
+    private lateinit var btCreateAccount: Button
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SignUpFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class SignUpFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        tvTerms = view.findViewById(R.id.tvTerms)
+        btCreateAccount= view.findViewById(R.id.btCreateAccount)
+        tvTerms.setOnClickListener {
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_signUpFragment_to_termsFragment)
+        }
+        btCreateAccount.setOnClickListener {
+            showSuccess()
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SignUpFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SignUpFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun showSuccess() {
+        hideLoading()
+        val navIdFromArguments = arguments?.getInt(NAVIGATION_KEY)
+        if (navIdFromArguments == null) {
+            findNavController().navigate(R.id.main_nav_graph)
+        } else {
+            findNavController().popBackStack(navIdFromArguments, false)
+        }
     }
 }

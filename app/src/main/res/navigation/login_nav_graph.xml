@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/login_graph"
+    android:id="@+id/login_nav_graph"
     app:startDestination="@id/loginFragment">
 
     <fragment
@@ -33,6 +33,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_signUpFragment_to_main_nav_graph"
+            app:destination="@id/main_nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/termsFragment"

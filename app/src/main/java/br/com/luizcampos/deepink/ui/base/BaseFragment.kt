@@ -12,12 +12,13 @@ import br.com.luizcampos.deepink.R
 
 
 abstract class BaseFragment : Fragment() {
+
     abstract val layout: Int
     private lateinit var loadingView: View
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+     inflater: LayoutInflater,
+     container: ViewGroup?,
+     savedInstanceState: Bundle?
     ): View? {
         val screenRootView = FrameLayout(requireContext())
         val screenView = inflater.inflate(layout, container, false)

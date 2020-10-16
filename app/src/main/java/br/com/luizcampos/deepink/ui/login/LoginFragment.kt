@@ -5,29 +5,47 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import androidx.transition.TransitionInflater
 import br.com.luizcampos.deepink.R
+import br.com.luizcampos.deepink.extensions.hideKeyboard
+import kotlinx.android.synthetic.main.fragment_login.*
+import br.com.luizcampos.deepink.ui.base.auth.NAVIGATION_KEY
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [LoginFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class LoginFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private lateinit var containerLogin: LinearLayout
+    private lateinit var tvSubTitleLogin: TextView
+    private lateinit var tvNewAccount: TextView
+    private lateinit var tvResetPassword: TextView
+
+    private lateinit var btLogin: Button
+    private lateinit var etEmailLogin: EditText
+    private lateinit var etPasswordLogin: EditText
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        sharedElementEnterTransition = TransitionInflater
+            .from(context)
+            .inflateTransition(android.R.transition.move)
+    }
+
+    private fun setUpView(view: View) {
+        containerLogin = view.findViewById(R.id.containerLogin)
+        tvSubTitleLogin = view.findViewById(R.id.tvSubTitleLogin)
+        tvNewAccount = view.findViewById(R.id.tvNewAccount)
+        tvResetPassword= view.findViewById(R.id.tvResetPassword)
+        btLogin= view.findViewById(R.id.btLogin)
+
     }
 
     override fun onCreateView(
@@ -38,23 +56,42 @@ class LoginFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LoginFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LoginFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpView(view)
+        tvNewAccount.setOnClickListener {
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_loginFragment_to_signUpFragment)
+        }
+        btLogin.setOnClickListener {
+            showSuccess()
+        }
+        startLoginAnimation()
+        registerBackPressedAction()
+    }
+
+    private fun showSuccess() {
+        val navIdFromArguments = arguments?.getInt(NAVIGATION_KEY)
+        if (navIdFromArguments == null) {
+            findNavController().navigate(R.id.main_nav_graph)
+        } else {
+            findNavController().popBackStack(navIdFromArguments, false)
+        }
+    }
+    private fun registerBackPressedAction() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                activity?.finish()
             }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+
+    private fun startLoginAnimation() {
+        val anim = AnimationUtils.loadAnimation(context, R.anim.anim_form_login)
+        containerLogin.startAnimation(anim)
+        tvSubTitleLogin.startAnimation(anim)
+        tvNewAccount.startAnimation(anim)
+        tvResetPassword.startAnimation(anim)
     }
 }
