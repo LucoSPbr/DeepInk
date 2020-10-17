@@ -9,6 +9,7 @@ import br.com.luizcampos.deepink.R
 import br.com.luizcampos.deepink.model.RequestState
 import br.com.luizcampos.deepink.model.dashboardmenu.DashboardItem
 import br.com.luizcampos.deepink.ui.base.BaseFragment
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : BaseFragment() {
     override val layout = R.layout.fragment_home
@@ -36,6 +37,18 @@ class HomeFragment : BaseFragment() {
             is RequestState.Error -> {
                 hideLoading() }
         } })
+        homeViewModel.userNameState.observe(viewLifecycleOwner, Observer { when (it) {
+            is RequestState.Loading -> {
+                tvHomeHelloUser.text = "Carregando ..."
+            }
+            is RequestState.Success -> {
+                tvHomeHelloUser.text = String.format(homeViewModel.dashboardMenu?.title ?: "", it.data)
+                tvSubTitleSignUp.text = homeViewModel.dashboardMenu?.subTitle }
+            is RequestState.Error -> {
+                tvHomeHelloUser.text = "Bem-vindo"
+                tvSubTitleSignUp.text = homeViewModel.dashboardMenu?.subTitle
+            } }
+        })
     }
 
     private fun setUpMenu(items: List<DashboardItem>) {
