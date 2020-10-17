@@ -64,6 +64,7 @@ class LoginFragment : Fragment() {
                 .navigate(R.id.action_loginFragment_to_signUpFragment)
         }
         btLogin.setOnClickListener {
+
             showSuccess()
         }
         startLoginAnimation()
@@ -73,6 +74,7 @@ class LoginFragment : Fragment() {
     private fun showSuccess() {
         val navIdFromArguments = arguments?.getInt(NAVIGATION_KEY)
         if (navIdFromArguments == null) {
+            //hideKeyboard()
             findNavController().navigate(R.id.main_nav_graph)
         } else {
             findNavController().popBackStack(navIdFromArguments, false)

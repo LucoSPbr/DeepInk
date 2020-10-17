@@ -3,19 +3,13 @@ package br.com.luizcampos.deepink.ui.signup
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import br.com.concrete.canarinho.watcher.TelefoneTextWatcher
-import br.com.concrete.canarinho.watcher.evento.EventoDeValidacao
 import br.com.luizcampos.deepink.R
-import br.com.luizcampos.deepink.models.RequestState
+import br.com.luizcampos.deepink.extensions.hideKeyboard
 import br.com.luizcampos.deepink.ui.base.BaseFragment
 import br.com.luizcampos.deepink.ui.base.auth.NAVIGATION_KEY
-import com.airbnb.lottie.LottieAnimationView
 
 class SignUpFragment : BaseFragment() {
     override val layout = R.layout.fragment_sign_up
@@ -31,6 +25,7 @@ class SignUpFragment : BaseFragment() {
                 .navigate(R.id.action_signUpFragment_to_termsFragment)
         }
         btCreateAccount.setOnClickListener {
+            hideKeyboard()
             showSuccess()
         }
     }
